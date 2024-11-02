@@ -20,8 +20,8 @@ class Personaje{
 }
 
 class Guerrero extends Personaje{
-  constructor(nombre,clase){
-    super(nombre,clase);
+  constructor(name,clase){
+    super(name,clase);
     this._vida = 20 + Math.floor(Math.random()*5);
     this._ataque = 7 + Math.floor(Math.random()*5);
     this._defensa= 8 + Math.floor(Math.random()*5);
@@ -42,8 +42,8 @@ class Guerrero extends Personaje{
 }
 
 class Mago extends Personaje{
-  constructor(nombre,clase){
-    super(nombre,clase);
+  constructor(name,clase){
+    super(name,clase);
     this._vida = 15 + Math.floor(Math.random()*5);
     this._ataque = 5 + Math.floor(Math.random()*5);
     this._defensa= 3 + Math.floor(Math.random()*5);
@@ -67,8 +67,8 @@ class Mago extends Personaje{
 }
 
 class Arquero extends Personaje{
-  constructor(nombre,clase){
-    super(nombre,clase);
+  constructor(name,clase){
+    super(name,clase);
     this._vida = 10 + Math.floor(Math.random()*5);
     this._ataque = 8 + Math.floor(Math.random()*5);
     this._defensa= 1 + Math.floor(Math.random()*5);
@@ -97,7 +97,7 @@ orden = jugadores.reverse((a,b) => {
 })
 
 orden.forEach(element =>{
-  console.log(element._velocidad)
+  console.log(element.name)
 })
 
 
