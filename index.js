@@ -153,7 +153,7 @@ function game(jugadores) {
     jugadores.forEach((element, index) => {
       if (element._vida < 1) {
         console.log(`Oh no, ${element._name} murio.`);
-        jugadores.splice(index, 1, element);
+        jugadores = jugadores.slice(index);
       }
     });
   }
