@@ -146,16 +146,16 @@ function game(jugadores) {
         Math.floor(Math.random() * a._velocidad)
       );
     });
-    action(
-      orden[Math.floor(Math.random() * jugadores.length)],
-      orden[Math.floor(Math.random() * jugadores.length)]
-    );
     jugadores.forEach((element, index) => {
       if (element._vida < 1) {
         console.log(`Oh no, ${element._name} murio.`);
         jugadores = jugadores.slice(index);
       }
     });
+    action(
+      orden[Math.floor(Math.random() * jugadores.length)],
+      orden[Math.floor(Math.random() * jugadores.length)]
+    );
   }
 }
 
