@@ -101,13 +101,6 @@ class Arquero extends Personaje{
   }
 }
 
-function game(jugadores){
- while(jugadores.length() > 1){
-  do{}
-  action(jugadores[Math.random()*2],jugadores[Math.random()*2])
- }
-}
-
 function action(player1,player2){
   let dice = Math.floor(Math.random()*(2-1)+1)
   let damage = 0;
@@ -130,15 +123,29 @@ function action(player1,player2){
   }
 }
 
-function round(players){
+/*function round(players){
   let orden;
-  for(let x = 0; x<4;x++){
-    orden = players.sort((a,b)=>{
-      return ( Math.floor(Math.random()* b._velocidad)) - (Math.floor(Math.random() * a._velocidad));
-    })
+  orden = players.sort((a,b)=>{
+    return (Math.floor(Math.random()* b._velocidad)) - (Math.floor(Math.random() * a._velocidad));
   }
   return orden;
-}
+}*/
+
+function game(jugadores){
+  let orden;
+  while(jugadores.length > 1){
+    orden = jugadores.sort((a,b)=> {
+      return (Math.floor(Math.random()* b._velocidad)) - (Math.floor(Math.random() * a._velocidad));
+    });
+    action(orden[Math.random()*jugadores.length],orden[Math.random()*jugadores.length])
+    jugadores.forEach(element,index => {
+      if(element._vida < 1){
+        console.log(`Oh no, ${element._name} murio.`)
+        jugadores.splice(index,1,element);
+      } 
+    });
+   }
+  }
 
 let jugadores = [];
 
@@ -148,5 +155,5 @@ jugadores.push(new Mago('Aerith','Mago'));
 jugadores.push(new Mago('Zatanna','Mago'));
 jugadores.push(new Arquero('Katniss','Arquero'));
 
-let orden = round(jugadores)
+game(jugadores);
 
