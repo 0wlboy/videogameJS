@@ -22,7 +22,7 @@ class Personaje {
       console.log(
         `El ataque cuasa un ${newDamage} de daño despues de que tu oponente se defendiera con ${defensa} puntos de defensa.`
       );
-      if((this._vida - newDamage)<0){
+      if((this._vida - newDamage)<1){
         this._vida = 0;
       }else{
         this._vida = this._vida - newDamage;
@@ -50,10 +50,11 @@ class Guerrero extends Personaje {
     ];
   }
 
-  UsarArma(player2) {
-    let arma = this._armas[Math.floor(Math.random() * (this._armas.length))];
-    console.log(`Va a usar ${arma.nombre}`);
-    this.takeDamage(arma.damage,player2._defensa)
+  UsarArma(objetivo) {
+    let arma = this._armas[Math.floor(Math.random() * this._armas.length)];
+    let damage = arma.damage
+    console.log(`${this._name} va a utilizar ${arma.nombre} para atacar a ${objetivo._name}`);
+    return damage;
   }
 }
 
@@ -75,49 +76,53 @@ class Mago extends Personaje {
     ];
   }
 
-  lanzarHechizo() {
-    return this._hechizos[Math.floor(Math.random() * 2)];
+  lanzarHechizo(objetivo) {
+    let hechizo = this._hechizos[Math.floor(Math.random() * this._hechizos.length)];
+    let damage = hechizo.damage
+    console.log(`${this._name} va a utilizar ${hechizo.nombre} para atacar a ${objetivo._name}`);
+    return damage;
   }
 }
 
 class Arquero extends Personaje {
   constructor(_name, _clase, _vida) {
     super(_name, _clase, _vida);
-    this._ataque = 8;
+    this._ataque = 3;
     this._defensa = 1;
     this._velocidad = 4;
-    this.flechas = 10;
-    this._damageFlechas = 3;
+    this.flechas = 3;
+    this._damageFlechas = 4;
   }
 
   dispararFlecha() {
-    if (this.flechas > 1) {
+    if (this.flechas < 1) {
       return 0;
     } else {
       --this.flechas;
-      return this._damageFlechas;
+      console.log(`${this._name} dispara una flecha. Ahora tiene ${this.flechas} flechas.`)
+      let damage = this._damageFlechas
+      return damage;
     }
   }
 }
 
 function action(player1, player2) {
-  let dice = 1;
+  let dice = Math.floor(Math.random() * 2);
   let accion;
   console.log(`Miren, ${player1._name} va a atacar a ${player2._name}`);
-  /*if (dice === 0) {
-    player1.desarmado;
+  if (dice === 0) {
+    player1.desarmado();
     player2.takeDamage(player1._ataque, player2._defensa);
-  }else */
+  }else
   if (dice === 1) {
     if (player1._clase === "Guerrero") {
-      player1.UsarArma(player2);
-      /*player2.takeDamage(accion.damage, player2._defensa);*/
+      accion = player1.UsarArma(player2);
+      player2.takeDamage(accion, player2._defensa);
     } else if (player1._clase === "Mago") {
-      accion = player1.lanzarHechizo;
-      console.log(`${player1._name} usa ${accion.nombre}`)
-      player2.takeDamage(accion.damage, player2._defensa);
+      accion = player1.lanzarHechizo(player2);
+      player2.takeDamage(accion, player2._defensa);
     } else if (player1._clase === "Arquero") {
-      accion = player1.dispararFlecha;
+      accion = player1.dispararFlecha();
       if(accion === 0){
         console.log(`No tienes flechas, no puedes hacer nada`)
       }else{
